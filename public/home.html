@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rede Social</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/home.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+
+    <main class="home">
+      <section class="novo-post">
+        <textarea
+          id="textoPost"
+          placeholder="O que está acontecendo?"
+        ></textarea>
+
+        <button id="btnPostar">Postar</button>
+      </section>
+
+      <section class="feed" id="feed">
+        <article class="post">
+          <h4>@usuario - 29/04/2026</h4>
+          <h3>Gnomos</h3>
+          <p>
+            Um gnomo é uma criatura fantástica e mitológica, conhecida como um
+            elemental da terra. Eles são tipicamente descritos como pequenos
+            humanoides barbudos que vivem no subsolo — em cavernas, minas ou
+            troncos de árvores — e são considerados os guardiões dos tesouros e
+            metais preciosos da natureza.
+          </p>
+          <button class="btn-curtir">❤️ <span>0</span></button>
+        </article>
+      </section>
+    </main>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/authRotas.js"></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>

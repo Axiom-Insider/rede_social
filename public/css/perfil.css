@@ -1,0 +1,85 @@
+.perfil {
+  max-width: 700px;
+  margin: 30px auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.meu{
+    margin-bottom: 10px;
+}
+
+.usuario,
+.post {
+  background: white;
+  color: black;
+
+  border-radius: 12px;
+  padding: 20px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.post:hover {
+  background: rgb(247, 245, 245);
+  cursor: pointer;
+}
+
+.usuario h2 {
+  margin-top: 0;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post h4 {
+  margin: 0 0 10px;
+  color: black;
+}
+
+.post p {
+  margin: 0;
+  color: black;
+}
+
+.acoes {
+  margin-top: 15px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.editar {
+  background: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.editar:hover {
+  background: #1a48aa;
+}
+
+.apagar:hover {
+  background: #8f1a1a;
+}
+
+.apagar {
+  background: #dc2626;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 8px 14px;
+  cursor: pointer;
+}

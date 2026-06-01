@@ -1,0 +1,86 @@
+.home {
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.novo-post {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+#btnPostar {
+  align-self: flex-end;
+
+  background: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.feed {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post {
+  background: rgb(255, 255, 255);
+  padding: 18px;
+  color: rgb(0, 0, 0);
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.post:hover {
+  background: rgb(247, 245, 245);
+  cursor: pointer;
+}
+
+.post h4 {
+  margin: 0 0 10px 0;
+}
+
+.post p {
+  margin: 0;
+}
+
+.btn-curtir {
+  margin-top: 12px;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.btn-curtir:hover {
+  background: #c5c5c5;
+}
