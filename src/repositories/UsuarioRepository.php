@@ -23,5 +23,11 @@ class UsuarioRepository
         }
     }
 
-    public function findByEmail(int $id_usuario) {}
+    public function findByEmail(string $email) {
+        try {
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }
