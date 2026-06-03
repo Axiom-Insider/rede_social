@@ -25,9 +25,21 @@ class UsuarioRepository
 
     public function findByEmail(string $email) {
         try {
+            $sql = "SELECT * FROM usuarios WHERE email = :email";
+
+            $stmt = $this->pdo->prepare($sql);
+
+            $stmt->execute([":email"=> $email]);
             
+            $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            print_r($dados);
+
+            return $dados;
+
         } catch (\Throwable $th) {
-            //throw $th;
+            Logger::erro($th->getMessage());
+            return false;
         }
     }
 }

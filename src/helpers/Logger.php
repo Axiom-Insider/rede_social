@@ -15,7 +15,7 @@
     }
 
     public static function info(string $mensagem):void{
-        self::salvar("[info]: $mensagem");
+        self::salvar("[INFO]: $mensagem");
     }
 
     private static function salvar(string $mensagem):void{

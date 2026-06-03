@@ -13,9 +13,9 @@ Migrations::load($pdo);
 $usuario = new Usuario(null, "francisco martins", "teste@gmail.com", "123");
 $usuarioRepository = new UsuarioRepository($pdo);
 
-$retorno = $usuarioRepository->criar($usuario);
 
-echo $retorno == true ? 'criado com sucesso' : "erro"; 
+$usuarioRepository->findByEmail("teste@gmail.com");
+
 
 echo "Banco pronto";
 
