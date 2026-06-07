@@ -1,0 +1,11 @@
+{
+    "require": {
+        "firebase/php-jwt": "^6.11"
+    },
+      "config": {
+        "audit": {
+            "ignore": ["PKSA-y2cr-5h3j-g3ys"]
+        }
+    }
+    
+}
