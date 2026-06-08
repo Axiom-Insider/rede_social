@@ -10,7 +10,7 @@ const pagina = window.location.pathname.split("/").pop();
             nav.innerHTML = data;
 
             const a = document.getElementById(pagina);
-            console.log(a);
+            console.log(a, pagina);
             
             if(a){
                 a.style.color = "white";
@@ -24,7 +24,6 @@ const pagina = window.location.pathname.split("/").pop();
             nav.innerHTML = data;
 
             const a = document.getElementById(pagina);
-            console.log(a);
             
             if(a){
                 a.style.color = "white";

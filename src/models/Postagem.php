@@ -12,7 +12,12 @@
         private string $conteudo,
         private ?DateTime $data
     )
-    {}
+    {
+        $this->titulo = trim($titulo);
+        if($titulo === ''){
+               throw new InvalidArgumentException("Campo Titulo Vazio");
+        }
+    }
 
     
 

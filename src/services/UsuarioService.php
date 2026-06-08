@@ -10,55 +10,34 @@ class UsuarioService
     public function __construct(private UsuarioRepository $usuarioRepository) {}
 
 
-    public function cadastrar(
-        string $nome,
-        string $email,
-        string $senha
-    ): array {
-        try {
+    public function cadastrar(Usuario $usuario): array {
+        try { 
 
-
-            $nome = trim($nome);
-            $email = trim($email);
-
-            if ($nome == "") {
+            if($this->usuarioRepository->findByEmail($usuario->getEmail())){
                 return [
                     "sucesso" => false,
-                    "mensagem" => "Campo nome inválido"
+                    "mensagem" => "Esse email já está em uso"
                 ];
             }
 
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                return [
-                    "sucesso" => false,
-                    "mensagem" => "Campo email inválido"
-                ];
+                 if (strlen($usuario->getSenha()) < 6) {
+               throw new InvalidArgumentException("Senha muito curta");
             }
 
-            if (strlen($senha) < 6) {
-                return [
-                    "sucesso" => false,
-                    "mensagem" => "Campo senha muito curta"
-                ];
-            }
-
-
-            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-            $usuario = new Usuario(null, $nome, $email, $senhaHash);
+            $usuario->setSenha(password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
 
             $criado = $this->usuarioRepository->criar($usuario);
 
 
             if (!$criado) {
-                Logger::erro("Falha ao cadastra usuario email: $email");
+                Logger::erro("Falha ao cadastra usuario email:". $usuario->getEmail());
                 return [
                     "sucesso" => false,
                     "mensagem" => "Falha ao cadastrar ususario"
                 ];
             }
 
-            Logger::sucesso("Usuario cadastrado $email");
+            Logger::sucesso("Usuario cadastrado " . $usuario->getEmail());
             return [
                 "sucesso" => true,
                 "mensagem" => "Usuario cadastrado com sucesso"
@@ -74,14 +53,14 @@ class UsuarioService
 
     public function perfil(int $id_usuario):array{
         try {
-            $dados = $this->usuarioRepository->findById($id_usuario);
-            if(!$dados){
+            $usuario = $this->usuarioRepository->findById($id_usuario);
+            if(!$usuario){
                 return [
                     "sucesso"=>false, "mensagem"=>"Usuário não encontrado"
                     ];
             }
             return [
-                "sucesso"=>true, $dados
+                "sucesso"=>true, $usuario
             ];
         } catch (Throwable $e) {
              Logger::erro($e->getMessage());

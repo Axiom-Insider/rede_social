@@ -15,7 +15,7 @@ function tipo(string $metodo):void {
 
 switch ($url){
 
-    case "/perfil":
+    case "/api/perfil":
         tipo("GET");
         AuthMiddleware::handle();
         $token = AutenticacaoUsuario::validarToken();
@@ -23,13 +23,13 @@ switch ($url){
 
         break;
 
-    case "/cadastro":
+    case "/api/cadastro":
             tipo("POST");
             $controller->cadastrar();
 
         break;
 
-    case "/login":
+    case "/api/login":
             tipo("POST");
             $controller->login();
         break;

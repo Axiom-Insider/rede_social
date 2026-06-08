@@ -12,7 +12,19 @@
         private string $nome,
         private string $email,
         private string $senha
-    ) {}
+    ) {
+            $this->nome = trim($nome);
+            $this->email = trim($email);
+
+            if ($this->nome == "") {
+                 throw new InvalidArgumentException("Nome inválido");
+            }
+
+            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+                 throw new InvalidArgumentException("Email inválido");
+            }
+
+    }
 
         /**
          * Get the value of email

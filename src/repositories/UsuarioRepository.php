@@ -55,14 +55,14 @@ class UsuarioRepository
         }
     }
 
-    public function findByEmail(string $email): Usuario | false
+    public function findByEmail(string $email): array | false
     {
         try {
 
             $usuario = $this->cache->get("usuario_$email");
 
             if($usuario){
-                return new Usuario($usuario["id_usuario"], $usuario["nome"], $usuario["email"], $usuario["senha"]);
+                return $usuario;
             }
 
             $sql = "SELECT * FROM usuarios WHERE email = :email";
@@ -75,7 +75,7 @@ class UsuarioRepository
 
             $this->cache->set("usuario_$email", $dados);
 
-            return new Usuario($dados["id_usuario"], $dados["nome"], $dados["email"], $dados["senha"]);
+            return $dados;
         } catch (PDOException $e) {
             Logger::erro($e->getMessage());
             return false;
