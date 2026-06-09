@@ -28,6 +28,9 @@ class PostagemRepository{
 
     public function findAllByDate():bool | array{
         try {
+            $cache = new Cache();
+            $cache->get("data");
+
             $sql = "SELECT p.titulo, p.conteudo, u.nome FROM postagens p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario ORDER BY p.data DESC";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute();

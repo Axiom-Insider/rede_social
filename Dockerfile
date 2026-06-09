@@ -19,6 +19,10 @@ RUN composer install
 
 COPY . /var/www/html
 
+RUN mkdir -p /var/www/html/cache \
+    && chown -R www-data:www-data /var/www/html/cache \
+    && chmod -R 775 /var/www/html/cache
+
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
 /etc/apache2/sites-available/*.conf
 
