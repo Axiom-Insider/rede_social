@@ -84,7 +84,7 @@ class UsuarioService
                 ];
             }
 
-            if (!password_verify($senha, $usuario->getSenha())) {
+            if (!password_verify($senha, $usuario["senha"])) {
                 return [
                     "sucesso" => false,
                     "mensagem" => "Senha incorreta"

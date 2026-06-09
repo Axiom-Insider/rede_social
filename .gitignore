@@ -1,3 +1,19 @@
-.env
+# Logs
 logs/*
 !logs/.gitkeep
+
+# Cache
+cache/*
+!cache/.gitkeep
+
+# Dependências do Composer
+vendor/
+
+# Variáveis de ambiente
+.env
+
+# Arquivos do VS Code
+.vscode/
+
+# Arquivos temporários
+*.log

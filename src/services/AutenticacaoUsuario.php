@@ -36,15 +36,15 @@ class AutenticacaoUsuario
         );
     }
 
-    public static function gerarToken(Usuario $usuario): string
+    public static function gerarToken(array $usuario): string
     {
 
         $secreto = getenv("KEY");
         $tempo = (int) getenv("TIME");
 
         $payload = [
-            "sub" => $usuario->getId_usuario(),
-            "email" => $usuario->getEmail(),
+            "sub" => $usuario["id_usuario"],
+            "email" => $usuario["email"],
             "iat" => time(),
             "exp" => time() + $tempo
         ];
