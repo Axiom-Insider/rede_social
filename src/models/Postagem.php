@@ -14,9 +14,15 @@
     )
     {
         $this->titulo = trim($titulo);
-        if($titulo === ''){
-               throw new InvalidArgumentException("Campo Titulo Vazio");
+
+        if($titulo == ''){
+               throw PostagemException::tituloVazio();
         }
+
+        if($this->conteudo == ''){
+                throw PostagemException::conteudoVazio();
+        }
+
     }
 
     

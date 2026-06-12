@@ -22,8 +22,21 @@ class PostagemRepository{
 
             $stmt->execute([":id_usuario"=>$id_usuario, ":titulo"=>$postagem->getTitulo(), ":conteudo"=>$postagem->getConteudo()]);
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $id_postagem = (int) $this->pdo->lastInsertId();
 
+            return $this->findById($id_postagem);
+        } catch (PDOException $e) {
+            Logger::erro($e->getMessage());
+            return false;
+        }
+    }
+
+    public function findById(int $id_postagem):bool | array{
+        try {
+            $sql = "SELECT p.titulo, p.conteudo, p.data, u.nome FROM postagens p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_postagem = :id_postagem";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([":id_postagem"=>$id_postagem]);
+            return $stmt->fetch();
         } catch (PDOException $e) {
             Logger::erro($e->getMessage());
             return false;
