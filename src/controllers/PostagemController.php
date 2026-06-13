@@ -10,15 +10,12 @@ class  PostagemController{
 
 
     public function postar(int $id_usuario):void {
-        $postagem = new Postagem(
-            null, 
-            $id_usuario, 
-            $_POST["titulo"],
-            $_POST["conteudo"],
-            null,
-            );
 
-        $res = $this->postagemService->postar($postagem);
+        $res = $this->postagemService->postar(
+            $id_usuario, 
+            $_POST["titulo"], 
+            $_POST["conteudo"]
+            );
 
         if($res["sucesso"]){
             Response::json(200, $res);
@@ -27,13 +24,27 @@ class  PostagemController{
          Response::json(400, $res);
     }
 
-    public function buscar():void{
+    public function buscarFeed():void{
         $res = $this->postagemService->buscarFeed();
 
         if($res["sucesso"]){
               Response::json(200, $res);
         }
 
-        Response::json(202, $res);
+        Response::json(404, $res);
+    }
+
+    public function buscarFeedPerfil(int $id_usuario):void{
+        $res = $this->postagemService->buscarFeedPerfil($id_usuario);
+
+        if($res["sucesso"]){
+            Response::json(200, $res);
+        }
+
+         Response::json(404, $res);
+    }
+
+    public function delete(int $id_postagem):void{
+        $res = $this->postagemService->delete($id_postagem);
     }
 }

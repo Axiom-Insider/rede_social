@@ -15,6 +15,15 @@
         file_put_contents($arquivo, json_encode(["valor" => $valor, "expira" => time() + $this->segundos]));
     }
 
+    public function delete(string $chave):void{
+         $arquivo = $this->pasta . md5($chave);
+
+        if(file_exists($arquivo)){
+           unlink($arquivo);
+           return;
+        }
+    }
+
     public function get(string $chave):mixed{
         $arquivo = $this->pasta . md5($chave);
 

@@ -15,6 +15,6 @@ class  PostagemException extends Exception{
     }
 
     public static function naoEncontrada():self{
-         return new self("O conteúdo da postagem é obrigatório");
+         return new self("Nenuma postagem foi encontrada");
     }
 }

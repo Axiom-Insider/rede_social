@@ -8,9 +8,11 @@ class PostagemService{
     public function __construct(private PostagemRepository $postagemRepository)
     {}
 
-    public function postar(Postagem $postagem):array{
+    public function postar(int $id_usuario, string $titulo, string $conteudo):array{
         try {
-            $postagem = $this->postagemRepository->criar($postagem->getId_usuario(), $postagem);
+            $postagem = new Postagem(null, $id_usuario, $titulo, $conteudo, null);
+        
+            $postagem = $this->postagemRepository->criar($postagem);
             
             if(!$postagem)return ["sucesso"=> false, "mensagem"=>"Não foi possível fazer postagem"];
 
@@ -27,8 +29,11 @@ class PostagemService{
         try {
             $postagens = $this->postagemRepository->findByUser($id_usuario);
 
-            if(!$postagens)return["sucesso"=>false, "mensagem"=>"Problema ao buscar postagens"];
-
+            if(!$postagens)throw PostagemException::naoEncontrada();
+            foreach ($postagens as &$value) {
+                $data = new DateTime($value["data"]);
+                $value["data"] = $data->format("d/m/Y");
+            }
             return ["sucesso" => true, $postagens];
         } catch (PostagemException $e) {
              Logger::erro($e->getMessage());
@@ -38,13 +43,27 @@ class PostagemService{
         }
     }
 
+    public function delete(int $id_postagem):array{
+        try {
+            $postagens = $this->postagemRepository->delete($id_postagem);
+            if(!$postagens);
+
+            return ["sucesso"=>true, "mensagem"=>"Postagem apagada com sucesso"];
+        } catch (PostagemException $e) {
+            Logger::erro($e->getMessage());
+            return [
+                "sucesso"=>false, "mensagem"=>$e->getMessage()
+            ];
+        }
+    }
+
     public function buscarFeed():array{
         try {
             $postagens = $this->postagemRepository->findAllByDate();
-            if(!$postagens)return[ "sucesso"=> false, "mensagem"=>"Problema ao buscar postagens"];
+            if(!$postagens)throw PostagemException::naoEncontrada();
             foreach ($postagens as &$value) {
-                list($ano, $mes ,$dia) = explode("-", $value["data"]);
-                $value["data"] = "$dia/$mes/$ano";
+                $data = new DateTime($value["data"]);
+                $value["data"] = $data->format("d/m/Y");
             }
             return ["sucesso"=>true, $postagens];
         } catch (PostagemException $e) {

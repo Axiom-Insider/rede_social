@@ -10,8 +10,10 @@ class UsuarioService
     public function __construct(private UsuarioRepository $usuarioRepository) {}
 
 
-    public function cadastrar(Usuario $usuario): array {
+    public function cadastrar(string $nome, string $email, string $senha): array {
         try { 
+
+            $usuario = new Usuario(null, $nome, $email, $senha);
 
             if($this->usuarioRepository->findByEmail($usuario->getEmail())){
                 return [

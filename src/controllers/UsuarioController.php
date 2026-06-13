@@ -20,13 +20,11 @@ class UsuarioController
 
     public function cadastrar(): void
     {
-        $usuario = new Usuario(
-            null,
+        $res = $this->usuarioService->cadastrar( 
             $_POST["nome"],
             $_POST["email"],
             $_POST["senha"]
             );
-        $res = $this->usuarioService->cadastrar($usuario);
 
         if ($res["sucesso"]) {
             Response::json(200, $res);

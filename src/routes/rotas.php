@@ -45,6 +45,12 @@ switch ($url){
     case "/api/feed":
         tipo("GET");
         AuthMiddleware::handle();
-        $PostagemController->buscar();
+        $PostagemController->buscarFeed();
+        break;
+
+    case "/api/feed-perfil":
+        tipo("GET");
+        $token = AutenticacaoUsuario::validarToken();
+        $PostagemController->buscarFeedPerfil((int)$token->sub);    
         break;
 }

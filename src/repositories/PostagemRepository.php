@@ -14,13 +14,13 @@ class PostagemRepository{
         $this->cache = new Cache();
     }
 
-    public function criar(int $id_usuario, Postagem $postagem):bool | array{
+    public function criar(Postagem $postagem):bool | array{
         try {
             $sql = "INSERT INTO postagens (id_usuario, titulo, conteudo) VALUES(:id_usuario, :titulo, :conteudo)";
 
             $stmt = $this->pdo->prepare($sql);
 
-            $stmt->execute([":id_usuario"=>$id_usuario, ":titulo"=>$postagem->getTitulo(), ":conteudo"=>$postagem->getConteudo()]);
+            $stmt->execute([":id_usuario"=>$postagem->getId_usuario(), ":titulo"=>$postagem->getTitulo(), ":conteudo"=>$postagem->getConteudo()]);
 
             $id_postagem = (int) $this->pdo->lastInsertId();
 
@@ -85,9 +85,13 @@ class PostagemRepository{
 
    public function delete(int $id_postagem):bool{
     try {
+        $postagem = $this->findById($id_postagem);
+        $id_usuario = $postagem["id_usuario"];
+        $this->cache->delete("postagem_$id_usuario");
+
         $sql = "DELETE FROM postagens WHERE id_postagem = :id_postagem";
         $stmt = $this->pdo->prepare($sql);
-    
+
         return $stmt->execute([":id_postagem"=>$id_postagem]);
     } catch (PDOException $e) {
         Logger::erro($e->getMessage());
