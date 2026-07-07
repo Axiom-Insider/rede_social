@@ -46,5 +46,10 @@ class  PostagemController{
 
     public function delete(int $id_postagem):void{
         $res = $this->postagemService->delete($id_postagem);
+
+        if($res["sucesso"]){
+            Response::json(200, $res);
+        }
+        Response::json(404, $res);
     }
 }

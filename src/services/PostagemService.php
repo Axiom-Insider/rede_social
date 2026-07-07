@@ -28,8 +28,7 @@ class PostagemService{
     public function buscarFeedPerfil(int $id_usuario):array{
         try {
             $postagens = $this->postagemRepository->findByUser($id_usuario);
-
-            if(!$postagens)throw PostagemException::naoEncontrada();
+            if(!$postagens)throw PostagemException::nenhumaEncontrada();
             foreach ($postagens as &$value) {
                 $data = new DateTime($value["data"]);
                 $value["data"] = $data->format("d/m/Y");
@@ -46,7 +45,8 @@ class PostagemService{
     public function delete(int $id_postagem):array{
         try {
             $postagens = $this->postagemRepository->delete($id_postagem);
-            if(!$postagens);
+
+            if(!$postagens) throw PostagemException::nenhumaEncontrada();
 
             return ["sucesso"=>true, "mensagem"=>"Postagem apagada com sucesso"];
         } catch (PostagemException $e) {

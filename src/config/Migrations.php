@@ -36,7 +36,7 @@
             id_postagem INT NOT NULL,
 
             FOREIGN KEY (id_usuario) REFERENCES  usuarios(id_usuario),
-            FOREIGN KEY (id_postagem) REFERENCES  postagens(id_postagem)
+            FOREIGN KEY (id_postagem) REFERENCES  postagens(id_postagem) ON DELETE CASCADE
         );
         ");
     }

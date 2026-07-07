@@ -6,7 +6,7 @@
 
  class Cache{
     private string $pasta = __DIR__ . "/../../cache/";
-    private int $segundos = 300;
+    private int $segundos = 5;
 
 
     public function set(string $chave, mixed $valor):void{

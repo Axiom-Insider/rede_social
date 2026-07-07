@@ -17,11 +17,11 @@
             $this->email = trim($email);
 
             if ($this->nome == "") {
-                 throw new InvalidArgumentException("Nome inválido");
+                 throw UsuarioException::nomeInvalido();
             }
 
             if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-                 throw new InvalidArgumentException("Email inválido");
+                 throw UsuarioException::emailInvalido();
             }
 
     }

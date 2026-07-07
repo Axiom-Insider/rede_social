@@ -15,17 +15,10 @@ class UsuarioService
 
             $usuario = new Usuario(null, $nome, $email, $senha);
 
-            if($this->usuarioRepository->findByEmail($usuario->getEmail())){
-                return [
-                    "sucesso" => false,
-                    "mensagem" => "Esse email já está em uso"
-                ];
-            }
+            if($this->usuarioRepository->findByEmail($usuario->getEmail()))throw UsuarioException::emailEmUso();
 
-                 if (strlen($usuario->getSenha()) < 6) {
-               throw new InvalidArgumentException("Senha muito curta");
-            }
-
+            if (strlen($usuario->getSenha()) < 6)throw UsuarioException::senhaCurta();
+            
             $usuario->setSenha(password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
 
             $criado = $this->usuarioRepository->criar($usuario);
@@ -44,7 +37,7 @@ class UsuarioService
                 "sucesso" => true,
                 "mensagem" => "Usuario cadastrado com sucesso"
             ];
-        } catch (Throwable $e) {
+        } catch (UsuarioException $e) {
             Logger::erro($e->getMessage());
             return [
                 "sucesso" => false,
@@ -56,11 +49,8 @@ class UsuarioService
     public function perfil(int $id_usuario):array{
         try {
             $usuario = $this->usuarioRepository->findById($id_usuario);
-            if(!$usuario){
-                return [
-                    "sucesso"=>false, "mensagem"=>"Usuário não encontrado"
-                    ];
-            }
+            if(!$usuario)UsuarioException::usuarioNaoEncontrado();
+
             return [
                 "sucesso"=>true, $usuario
             ];
@@ -79,19 +69,9 @@ class UsuarioService
 
             $usuario = $this->usuarioRepository->findByEmail($email);
 
-            if (!$usuario) {
-                return [
-                    "sucesso" => false,
-                    "mensagem" => "Usuário não encontrado"
-                ];
-            }
+             if(!$usuario)UsuarioException::usuarioNaoEncontrado();
 
-            if (!password_verify($senha, $usuario["senha"])) {
-                return [
-                    "sucesso" => false,
-                    "mensagem" => "Senha incorreta"
-                ];
-            }
+            if (!password_verify($senha, $usuario["senha"])) UsuarioException::senhaIncorreta();
 
             $token = AutenticacaoUsuario::gerarToken($usuario);
 

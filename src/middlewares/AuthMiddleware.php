@@ -11,13 +11,12 @@ class AuthMiddleware
     public static function handle(): object
     {
         try {
-
             return AutenticacaoUsuario::validarToken();
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             Logger::info($e->getMessage());
             Response::json(
                 401,
-                ["success" => false, "message" => "Não autorizado"]
+                ["success" => false, "message" => "Sessão expirada. Faça login novamente"]
             );
 
             exit;
