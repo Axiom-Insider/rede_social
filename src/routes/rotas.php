@@ -48,7 +48,8 @@ switch ($url) {
     case "/api/feed":
         tipo("GET");
         AuthMiddleware::handle();
-        $PostagemController->buscarFeed();
+        $token = AutenticacaoUsuario::validarToken();
+        $PostagemController->buscarFeed((int)$token->sub);
         break;
 
     case "/api/feed-perfil":
@@ -77,8 +78,4 @@ switch ($url) {
         $CurtidaController->removerCurtida((int) $_GET["id_curtida"]);
         break;
 
-
-    default:
-        Response::json(405, ["sucesso" => false]);
-        break;
 }

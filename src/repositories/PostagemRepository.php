@@ -50,27 +50,28 @@ class PostagemRepository
         }
     }
 
-    public function findAllByDate(): bool | array
+    public function findAllByDate(int $id_usuario): bool | array
     {
         try {
-            $dados = $this->cache->get("postagem_all");
+            $dados = $this->cache->get("postagem_all_$id_usuario");
 
             if ($dados) return $dados;
 
-            $sql = "SELECT p.id_postagem, p.titulo, p.conteudo, p.data, u.nome, COUNT(uc.id_curtida) AS total_curtidas, c.id_curtida
-            FROM postagens p 
-            INNER JOIN curtidas uc
-            ON p.id_postagem = uc.id_postagem
-            LEFT JOIN curtidas c 
-            ON p.id_postagem = c.id_postagem 
-            AND c.id_usuario = :id_usuario
-            INNER JOIN usuarios u 
-            ON p.id_usuario = u.id_usuario 
-            GROUP BY p.id_postagem, p.titulo, p.conteudo, p.data, u.nome, c.id_curtida
-            ORDER BY p.data DESC";
+            $sql = "SELECT p.id_postagem, p.titulo, p.conteudo, p.data, u.nome, COUNT(c.id_curtida) AS total_curtidas, uc.id_curtida,
+                CASE WHEN uc.id_curtida IS NOT NULL THEN true ELSE false END AS curtida
+                FROM postagens p
+                INNER JOIN usuarios u
+                ON p.id_usuario = u.id_usuario
+                LEFT JOIN curtidas c
+                ON p.id_postagem = c.id_postagem
+                LEFT JOIN curtidas uc
+                ON p.id_postagem = uc.id_postagem
+                AND uc.id_usuario = :id_usuario
+                GROUP BY p.id_postagem, p.titulo, p.conteudo, p.data, u.nome, uc.id_curtida
+                ORDER BY p.data DESC;";
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([":id_usuario"=>"8"]);
+            $stmt->execute([":id_usuario"=>$id_usuario]);
             $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if($dados) $this->cache->set("postagem_all", $dados);
             

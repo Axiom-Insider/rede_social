@@ -57,9 +57,9 @@ class PostagemService{
         }
     }
 
-    public function buscarFeed():array{
+    public function buscarFeed(int $id_usuario):array{
         try {
-            $postagens = $this->postagemRepository->findAllByDate();
+            $postagens = $this->postagemRepository->findAllByDate($id_usuario);
             if(!$postagens)throw PostagemException::naoEncontrada();
             foreach ($postagens as &$value) {
                 $data = new DateTime($value["data"]);

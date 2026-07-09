@@ -24,8 +24,8 @@ class  PostagemController{
          Response::json(400, $res);
     }
 
-    public function buscarFeed():void{
-        $res = $this->postagemService->buscarFeed();
+    public function buscarFeed(int $id_usuario):void{
+        $res = $this->postagemService->buscarFeed($id_usuario);
 
         if($res["sucesso"]){
               Response::json(200, $res);
