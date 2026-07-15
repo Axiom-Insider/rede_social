@@ -3,8 +3,8 @@
 
 class Usuario extends Api{
 
-    login($email, $senha){
-        this.resquest("/login", "POST", {
+    async login($email, $senha){
+        return await this.resquest("/login", "POST", {
             $email, $senha
         })
     }

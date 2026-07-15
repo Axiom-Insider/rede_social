@@ -1,16 +1,16 @@
 const nav = document.getElementById("navbar");
-const token = localStorage.getItem("token");
-const pagina = window.location.pathname.split("/").pop();
+const token_navbar = localStorage.getItem("token");
+const pagina_navbar = window.location.pathname.split("/").pop();
 
     //sistema para carregar navbar depedendo se o usuario esta logado ou não
-    if(token){
+    if(token_navbar){
         fetch("models/navbarOn.html")
         .then(res => res.text())
         .then(data=>{
             nav.innerHTML = data;
 
-            const a = document.getElementById(pagina);
-            console.log(a, pagina);
+            const a = document.getElementById(pagina_navbar);
+            console.log(a, pagina_navbar);
             
             if(a){
                 a.style.color = "white";
@@ -23,7 +23,7 @@ const pagina = window.location.pathname.split("/").pop();
         .then(data=>{
             nav.innerHTML = data;
 
-            const a = document.getElementById(pagina);
+            const a = document.getElementById(pagina_navbar);
             
             if(a){
                 a.style.color = "white";
